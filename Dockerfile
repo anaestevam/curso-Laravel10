@@ -1,42 +1,63 @@
-FROM php:8.1-fpm
+FROM php:8.1.9-fpm-alpine AS builder
 
-# set your user name, ex: user=bernardo
-ARG user=ana
-ARG uid=1000
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
+RUN apk update
+RUN apk add --no-cache $PHPIZE_DEPS \
+    linux-headers \
+    bash \
+    shadow \
+    libpng \
+    zlib-dev \
+    libzip-dev \
     zip \
-    unzip
+    libpng-dev \
+    libjpeg-turbo-dev \
+    libwebp-dev \
+    libxpm-dev \
+    libxml2-dev \
+    mariadb-connector-c \
+    mariadb-client \
+    && docker-php-ext-install \
+    gd \
+    mysqli \
+    pdo_mysql \
+    soap \
+    bcmath \
+    zip \
+    && apk del \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    libwebp-dev \
+    zlib-dev \
+    libxpm-dev \
+    libxml2-dev
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
+RUN pecl install excimer \
+    && docker-php-ext-enable excimer
 
-# Get latest Composer
+RUN touch /home/www-data/.bashrc | echo "PS1='\w\$ '" >> /home/www-data/.bashrc
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+RUN curl -L -o /tmp/apm-agent-php_1.9.1_all.apk https://github.com/elastic/apm-agent-php/releases/download/v1.9.1/apm-agent-php_1.9.1_all.apk
+RUN apk add --allow-untrusted /tmp/apm-agent-php_1.9.1_all.apk
+RUN rm -rf /tmp/apm-agent-php_1.9.1_all.apk
 
-# Install redis
-RUN pecl install -o -f redis \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis
+COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
+# COPY docker/php/elastic.ini /usr/local/etc/php/conf.d/elastic.ini
 
-# Set working directory
 WORKDIR /var/www
 
-# Copy custom configurations PHP
-COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
+FROM builder
 
-USER $user
+WORKDIR /var/www
+
+RUN usermod -u 1000 www-data
+RUN chown -R www-data:www-data /var/www
+USER www-data
+
+
+EXPOSE 9000
+CMD [ "php-fpm" ]
