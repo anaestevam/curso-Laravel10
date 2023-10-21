@@ -1,0 +1,39 @@
+h1 {
+    font-size: 2.5em; /* Tamanho da fonte */
+    font-weight: bold; /* Peso da fonte (negrito) */
+    text-align: center; /* Alinhamento de texto (centralizado) */
+    color: #333; /* Cor do texto */
+    text-transform: uppercase; /* Transformação de texto em maiúsculas */
+    letter-spacing: 4px; /* Espaçamento entre letras */
+    margin: 20px 0; /* Espaçamento nas margens superior e inferior */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto */
+    background-color: #f7f7f7; /* Cor de fundo */
+    padding: 10px; /* Preenchimento interno */
+    border: 2px solid #999; /* Borda */
+    border-radius: 10px; /* Cantos arredondados */
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #333;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tr:hover {
+    background-color: #ccc;
+  }
+  
