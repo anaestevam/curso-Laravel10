@@ -29,9 +29,43 @@ class SupportController extends Controller
         return view('admin/supports/create');
     }
     public function store(Request $request, Support $support){
-        $data = $request->all();
         
+        $data = $request->all();
         $support = $support->create($data);
+
+        return redirect()->route('supports.index');
+    }
+    public function edit(Support $support, string|int $id){
+        if(!$support = $support->where('id', $id)->first()){
+            return back();
+        }
+
+        return view('admin/supports.edit', compact('support'));
+    }
+
+    public function update(Request $request, Support $support, string|int $id){
+        if(!$support = Support::find($id)){
+            return back();
+        }
+
+        // $support->subject = $request->subject;
+        // $support->body = $request->body;
+        // $support->status = $request->status;
+        // $support->save();
+
+        $support->update($request->only([
+            'subject', 'body', 'status'
+        ]));
+
+        return redirect()->route('supports.index');
+    }
+
+    public function destroy(string|int $id){
+        if(!$support = Support::find($id)){
+            return back();
+        }
+
+        $support->delete();
 
         return redirect()->route('supports.index');
     }

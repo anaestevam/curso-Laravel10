@@ -39,7 +39,23 @@ ul.my-list li span.label {
 ul.my-list li span.text {
   color: #333; /* Cor do texto associado */
 }
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF; /* Cor de fundo do botão */
+    color: #fff; /* Cor do texto do botão */
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px; /* Cantos arredondados */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transição suave de cor de fundo */
+    margin-bottom: 20px;
+  }
 
+button:hover {
+  background-color: #0056b3; /* Cor de fundo do botão ao passar o mouse */
+}
 
 </style>
 <h1>Detalhes da dúvida ID:{{ $support->id }}</h1>
@@ -49,3 +65,9 @@ ul.my-list li span.text {
     <li><span class="label">Status:</span> <span class="text">{{ $support->status }}</span></li>
     <li><span class="label">Descrição:</span> <span class="text">{{ $support->body }}</span></li>
 </ul>
+
+<form action="{{ route('supports.destroy', $support->id )}}" method="post">
+  @csrf
+  @method('DELETE')
+  <button type="submit">Apagar</button>
+</form>

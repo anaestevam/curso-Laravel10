@@ -78,24 +78,23 @@ select:focus {
   border-color: #007BFF;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.7);
 }
-
 </style>
 
-<h1>Nova dúvidas</h1>
+<h1>Dúvida ID:{{ $support->id }}</h1>
 
-<form id="meu-form" action="{{ route('supports.store') }}" method="POST">
-    {{-- <input type="hidden" value="{{ csrf_token() }}" name="_token"> --}}
+<form id="meu-form" action="{{ route('supports.update', $support->id) }}" method="POST">
     @csrf
-    <input type="text" placeholder="Digite o assunto aqui" name="subject" id="subject" required>
+    @method('PUT')
+    <input type="text" placeholder="Digite o assunto aqui" name="subject" id="subject" value="{{ $support->subject }}" required>
     <div style="clear: both"></div>
-    <textarea id="body" name="body" cols="30" rows="5" placeholder="Descrição" required></textarea>
+    <textarea id="body" name="body" cols="30" rows="5" placeholder="Descrição" required>{{ $support->body }}</textarea>
     <div style="clear: both"></div>
     <label for="status">Selecione o status:</label>
     <select id="status" name="status" required>
         <option value="">Selecione</option>
-        <option value="a">Aberto</option>
-        <option value="p">Pendente</option>
-        <option value="c">Concluído</option>
+        <option value="a" {{ $support->status === 'a' ? 'selected' : ''}}>Aberto</option>
+        <option value="p" {{ $support->status === 'p' ? 'selected' : ''}}>Pendente</option>
+        <option value="c" {{ $support->status === 'c' ? 'selected' : ''}}>Concluído</option>
     </select>
     <div style="clear: both"></div>
     <button type="submit">Enviar</button>
