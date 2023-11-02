@@ -83,15 +83,21 @@ select:focus {
 
 <h1>Nova dúvidas</h1>
 
+@if($errors->any())
+    @foreach($errors->all() as $error)
+      {{ $error }}
+    @endforeach
+@endif
+
 <form id="meu-form" action="{{ route('supports.store') }}" method="POST">
     {{-- <input type="hidden" value="{{ csrf_token() }}" name="_token"> --}}
     @csrf
-    <input type="text" placeholder="Digite o assunto aqui" name="subject" id="subject" required>
+    <input type="text" placeholder="Digite o assunto aqui" name="subject" id="subject" value="{{ old('body') }}">
     <div style="clear: both"></div>
-    <textarea id="body" name="body" cols="30" rows="5" placeholder="Descrição" required></textarea>
+    <textarea id="body" name="body" cols="30" rows="5" placeholder="Descrição">{{ old('body') }}</textarea>
     <div style="clear: both"></div>
     <label for="status">Selecione o status:</label>
-    <select id="status" name="status" required>
+    <select id="status" name="status">
         <option value="">Selecione</option>
         <option value="a">Aberto</option>
         <option value="p">Pendente</option>

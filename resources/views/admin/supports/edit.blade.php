@@ -82,6 +82,12 @@ select:focus {
 
 <h1>Dúvida ID:{{ $support->id }}</h1>
 
+@if($errors->any())
+    @foreach($errors->all() as $error)
+      {{ $error }}
+    @endforeach
+@endif
+
 <form id="meu-form" action="{{ route('supports.update', $support->id) }}" method="POST">
     @csrf
     @method('PUT')
