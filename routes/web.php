@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Route::get('/home', [SiteController::class, 'home']);
 
+Route::get('/supports/aprender', [SupportController::class, 'aprender'])->name('supports.aprender');
 Route::delete('/supports/{id}', [SupportController::class, 'destroy'])->name('supports.destroy');
 Route::put('/supports/{id}', [SupportController::class, 'update'])->name('supports.update');
 Route::post('/supports', [SupportController::class, 'store'])->name('supports.store');

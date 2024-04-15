@@ -1,3 +1,4 @@
+
 <style>
     h1 {
     font-size: 2.5em; /* Tamanho da fonte */
@@ -71,44 +72,38 @@ button:hover {
   background-color: #0056b3; /* Cor de fundo do botão ao passar o mouse */
 }
 </style>
+<h1>
+    TESTE
 
-<h1>Listagem dos Suportes</h1>
+</h1>
+<?
 
-<a href="{{ route('supports.create') }}" class="button">Criar Nova Dúvida</a>
 
-<table>
-    <thead>
-        <th>Assunto</th>
-        <th>Status</th>
-        <th>Descrição</th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </thead>
-    <tbody>
-        @foreach ($supports as $support)
-            <tr>
-                <td>{{ $support->subject }}</td>
-                <td>
-                    @if ($support->status == 'a')
-                        <span style="color: red;">Aberto</span>
-                    @elseif ($support->status == 'p')
-                        <span style="color: orange;">Pendente</span>
-                    @else
-                        <span style="color: green;">Concluído</span>
-                    @endif
-                </td>
-                <td>{{ $support->body }}</td>
-                <td><a href="{{ route('supports.show', $support->id) }}">Ver tudo</a></td>
-                <td><a href="{{ route('supports.edit', $support->id) }}">Editar</a></td>
-                <td>
-                  <form action="{{ route('supports.destroy', $support->id )}}" method="post">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit">Apagar</button>
-                </form>
-              </td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+
+// imprimir na tela é o texto entre aspas
+  echo "";
+
+//fazer dividendo
+
+$a = 658478;
+$b = 200;
+
+$div = $a + $b;
+$aux= 0;
+$valores = "texto";
+
+echo "Valor de A: ". $a . "<br><br>";
+echo "Valor de B: ". $b . "<br><br>";
+
+echo "Valor somando: ". $div . "<br>";
+
+
+if($aux < 10){
+  echo $valores;
+  $aux++;
+}
+
+
+
+
+?>

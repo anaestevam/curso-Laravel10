@@ -29,6 +29,9 @@ class SupportController extends Controller
     public function create(){
         return view('admin/supports/create');
     }
+    public function aprender(){
+        return view('admin/supports/aprender');
+    }
     public function store(StoreUpdateSupport $request, Support $support){
         
         $data = $request->validated();
