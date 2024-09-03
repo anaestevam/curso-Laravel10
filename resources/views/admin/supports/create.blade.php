@@ -92,7 +92,7 @@ select:focus {
 <form id="meu-form" action="{{ route('supports.store') }}" method="POST">
     {{-- <input type="hidden" value="{{ csrf_token() }}" name="_token"> --}}
     @csrf
-    <input type="text" placeholder="Digite o assunto aqui" name="subject" id="subject" value="{{ old('body') }}">
+    <input type="text" placeholder="Digite o assunto aqui" name="subject" id="subject" value="{{ old('subject') }}">
     <div style="clear: both"></div>
     <textarea id="body" name="body" cols="30" rows="5" placeholder="Descrição">{{ old('body') }}</textarea>
     <div style="clear: both"></div>

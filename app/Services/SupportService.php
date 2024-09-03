@@ -21,4 +21,27 @@ class SupportService
     {
         return $this->repository->findOne($id);
     }
+
+    public function new(
+        string $subject,
+        string $body,
+        string $status
+    ): stdClass
+    {
+        return $this->repository->new($subject,$body,$status);
+    }
+
+    public function update(
+        string $id,
+        string $subject,
+        string $body,
+        string $status
+    ): stdClass|null
+    {
+        return $this->repository->update($id,$subject,$body,$status);
+    }
+    public function delete(string $id): void
+    {
+        $this->repository->delete($id);
+    }
 }
